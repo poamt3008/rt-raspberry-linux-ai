@@ -10,13 +10,13 @@ TARGET = rt-linux-ai
 
 CC = gcc
 
-INCLUDES = \
-	-Iinclude \
-	-Idrivers
+CFLAGS = -Wall -Wextra \
+          -Iinclude \
+          -Idrivers \
+          -Itasks \
+          -Icore
 
-CFLAGS = -Wall -Wextra $(INCLUDES)
-
-LDFLAGS =
+LDFLAGS = -pthread
 
 ###############################################################################
 # Sources
@@ -24,7 +24,9 @@ LDFLAGS =
 
 SRC = \
 	app/main.c \
-	drivers/camera.c
+	drivers/camera.c \
+	tasks/task_capture.c \
+	core/time_utils.c
 
 OBJ = $(SRC:.c=.o)
 

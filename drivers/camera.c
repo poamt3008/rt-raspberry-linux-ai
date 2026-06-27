@@ -46,12 +46,14 @@ int camera_capture(const char *filename)
 
     snprintf(command,
          sizeof(command),
-         "ffmpeg -loglevel error -f v4l2 -i %s "
+         "ffmpeg -nostdin -y -loglevel error -f v4l2 -i %s "
          "-frames:v 1 -update 1 %s",
          CAMERA_DEVICE,
          filepath);
-
+    
+    printf("[CAMERA] Command: %s\n", command);
     int ret = system(command);
+    
 
     if (ret != 0)
     {

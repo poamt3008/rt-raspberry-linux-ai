@@ -12,7 +12,7 @@
 #define CONFIG_H
 
 /*Camara configuration*/
-#define CAMERA_DEVICE "/dev/video1"
+#define CAMERA_DEVICE "/dev/video0"
 #define IMAGE_DIRECTORY "images"
 
 /*Capture task configuration*/
