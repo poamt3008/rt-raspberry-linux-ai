@@ -16,6 +16,6 @@
 #define IMAGE_DIRECTORY "images"
 
 /*Capture task configuration*/
-#define CAPTURE_PERIOD_SEC 10
+#define CAPTURE_PERIOD_SEC 5
 
 #endif

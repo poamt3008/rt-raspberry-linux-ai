@@ -40,12 +40,26 @@ void *task_capture(void *arg)
      * Initialization
      **************************************************************************/
     clock_gettime(CLOCK_MONOTONIC, &next_activation);
+    
+    printf("[CAPTURE] Period = %d s\n", CAPTURE_PERIOD_SEC);
+
     printf("[CAPTURE] task Started. \n");
 
-
-    /********INICIO de Tarea Periodica*************/
     while(1)
     {
+        next_activation.tv_sec += CAPTURE_PERIOD_SEC;
+
+        int ret = clock_nanosleep(
+            CLOCK_MONOTONIC,
+            TIMER_ABSTIME,
+            &next_activation,
+            NULL);
+
+        if (ret != 0)
+        {
+            printf("[CAPTURE] clock_nanosleep() failed.\n");
+        }
+
         /*Tarea periodica*/
         snprintf(filename,
                 sizeof(filename),
@@ -54,14 +68,17 @@ void *task_capture(void *arg)
 
         printf("[CAPTURE] %s\n",filename);
 
-        camera_capture(filename);
+        if (camera_capture(filename) != 0)
+        {
+            printf("[CAPTURE] Image capture failed.\n");
+        }
 
         image_index++;
         if ( image_index >= 10)
         {
             image_index = 0;
         }
-        break;
+                
     }
 
     return NULL;
