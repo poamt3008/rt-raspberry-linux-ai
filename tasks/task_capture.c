@@ -17,6 +17,7 @@
 #include "task_capture.h"
 #include "camera.h"
 #include "config.h"
+#include "time_utils.h"
 
 #include <pthread.h>
 #include <stdio.h>
@@ -41,13 +42,16 @@ void *task_capture(void *arg)
      **************************************************************************/
     clock_gettime(CLOCK_MONOTONIC, &next_activation);
     
-    printf("[CAPTURE] Period = %d s\n", CAPTURE_PERIOD_SEC);
+    printf("[CAPTURE] Period = %d ms\n", CAPTURE_PERIOD_MS);
 
-    printf("[CAPTURE] task Started. \n");
+    printf("[CAPTURE] Task Started. \n");
 
     while(1)
     {
-        next_activation.tv_sec += CAPTURE_PERIOD_SEC;
+        //next_activation.tv_sec += CAPTURE_PERIOD_SEC;
+        timespec_add_ms(&next_activation,
+                        CAPTURE_PERIOD_MS);
+
 
         int ret = clock_nanosleep(
             CLOCK_MONOTONIC,
@@ -74,7 +78,7 @@ void *task_capture(void *arg)
         }
 
         image_index++;
-        if ( image_index >= 10)
+        if ( image_index >= NUMBER_IMAGES)
         {
             image_index = 0;
         }

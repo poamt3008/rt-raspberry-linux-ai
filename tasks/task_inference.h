@@ -1,26 +1,19 @@
+#ifndef TASK_INFERENCE_H
+#define TASK_INFERENCE_H
+
 /******************************************************************************
- * File: config.h
+ * File: task_inference.h
  * Author: Ander
  *
- * Project:
- * Real-Time AI System on Raspberry Pi
- *
  * Description:
- * Global configuration parameters.
+ * Periodic neural network inference task.
  ******************************************************************************/
-#ifndef CONFIG_H
-#define CONFIG_H
-
-/*Camara configuration*/
-#define CAMERA_DEVICE "/dev/video0"
-#define IMAGE_DIRECTORY "images"
 
 /******************************************************************************
- * Task periods
+ * Public Functions
  ******************************************************************************/
-#define CAPTURE_PERIOD_MS 5000
-#define INFERENCE_PERIOD_MS   1000
 
-#define NUMBER_IMAGES 5
+/* Periodic inference task. */
+void *task_inference(void *arg);
 
 #endif

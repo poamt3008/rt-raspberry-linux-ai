@@ -23,10 +23,11 @@ LDFLAGS = -pthread
 ###############################################################################
 
 SRC = \
-	app/main.c \
-	drivers/camera.c \
-	tasks/task_capture.c \
-	core/time_utils.c
+    app/main.c \
+    drivers/camera.c \
+    tasks/task_capture.c \
+    tasks/task_inference.c \
+    core/time_utils.c
 
 OBJ = $(SRC:.c=.o)
 
