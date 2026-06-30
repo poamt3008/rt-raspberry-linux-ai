@@ -27,7 +27,8 @@ SRC = \
     drivers/camera.c \
     tasks/task_capture.c \
     tasks/task_inference.c \
-    core/time_utils.c
+    core/time_utils.c \
+    models/network.c
 
 OBJ = $(SRC:.c=.o)
 
