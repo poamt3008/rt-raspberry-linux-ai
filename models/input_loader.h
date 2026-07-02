@@ -1,34 +1,37 @@
+#ifndef INPUT_LOADER_H
+#define INPUT_LOADER_H
+
 /******************************************************************************
- * File: config.h
+ * File: input_loader.h
  * Author: Ander
  *
- * Project:
- * Real-Time AI System on Raspberry Pi
- *
  * Description:
- * Global configuration parameters.
+ * Load neural network input vectors from external files.
  ******************************************************************************/
-#ifndef CONFIG_H
-#define CONFIG_H
-
-/*Camara configuration*/
-#define CAMERA_DEVICE "/dev/video0"
-#define IMAGE_DIRECTORY "images"
 
 /******************************************************************************
- * Task periods
+ * Includes
  ******************************************************************************/
-#define CAPTURE_PERIOD_MS 5000
-#define INFERENCE_PERIOD_MS   1000
 
-#define NUMBER_IMAGES 5
+#include "network.h"
 
 /******************************************************************************
- * Dataset
+ * Public Functions
  ******************************************************************************/
 
-#define DATASET_PATH        "datasets/test_data/input"
-
-#define NUMBER_TEST_IMAGES  10
+/**
+ * Load an input vector from a text file.
+ *
+ * Parameters:
+ *      filename : Path to the input file.
+ *      input    : Output vector.
+ *
+ * Returns:
+ *      0  Success.
+ *     -1  Error.
+ */
+int input_loader_load(
+    const char *filename,
+    float input[INPUT_SIZE]);
 
 #endif

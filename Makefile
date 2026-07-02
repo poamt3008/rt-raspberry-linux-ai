@@ -14,12 +14,13 @@ CFLAGS = -Wall -Wextra \
           -Iinclude \
           -Idrivers \
           -Itasks \
-          -Icore
+          -Icore \
+          -Imodels
 
-LDFLAGS = -pthread
+LDFLAGS = -pthread -lm
 
 ###############################################################################
-# Sources
+# Application Sources
 ###############################################################################
 
 SRC = \
@@ -28,18 +29,43 @@ SRC = \
     tasks/task_capture.c \
     tasks/task_inference.c \
     core/time_utils.c \
-    models/network.c
+    models/network.c \
+    models/weights.c \
+    models/input_loader.c
 
 OBJ = $(SRC:.c=.o)
 
 ###############################################################################
-# Build
+# Test Sources
+###############################################################################
+
+TEST_TARGET = tests/test_network
+
+TEST_SRC = \
+    tests/test_network.c \
+    models/network.c \
+    models/weights.c \
+    models/input_loader.c
+
+###############################################################################
+# Build Application
 ###############################################################################
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
+
+###############################################################################
+# Build Test
+###############################################################################
+
+test_network:
+	$(CC) $(TEST_SRC) $(CFLAGS) -o $(TEST_TARGET) $(LDFLAGS)
+
+###############################################################################
+# Generic Rule
+###############################################################################
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -49,6 +75,12 @@ $(TARGET): $(OBJ)
 ###############################################################################
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(OBJ)
+	rm -f $(TARGET)
+	rm -f $(TEST_TARGET)
 
-.PHONY: all clean
+###############################################################################
+# Phony Targets
+###############################################################################
+
+.PHONY: all clean test_network

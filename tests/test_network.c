@@ -3,43 +3,29 @@
 #include <string.h>
 
 #include "network.h"
+#include "input_loader.h"
 
 int main(int argc, char *argv[])
 {
-    FILE *fp;
+  
 
     float input[INPUT_SIZE];
     float out[OUTPUT_SIZE];
 
     int digit;
-    int i;
 
     if (argc != 2)
     {
-        printf("Uso:\n");
-        printf("    %s <archivo.txt>\n", argv[0]);
+        printf("Usage:\n");
+        printf("    %s <input_file.txt>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    fp = fopen(argv[1], "r");
-
-    if (fp == NULL)
+    if (input_loader_load(argv[1], input) != 0)
     {
-        perror("Error al abrir el archivo");
+        printf("Error loading input file.\n");
         return EXIT_FAILURE;
     }
-
-    for (i = 0; i < INPUT_SIZE; i++)
-    {
-        if (fscanf(fp, "%f", &input[i]) != 1)
-        {
-            printf("Error leyendo el archivo.\n");
-            fclose(fp);
-            return EXIT_FAILURE;
-        }
-    }
-
-    fclose(fp);
 
     digit = network_predict(input, out);
 
