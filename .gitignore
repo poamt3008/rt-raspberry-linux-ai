@@ -12,6 +12,9 @@ rt-linux-ai
 
 tests/test_network
 tests/test_gpio
+tests/test_image_proc
+tests/test_pipeline
+debug_output/
 
 ###############################################################################
 # Object files

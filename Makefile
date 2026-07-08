@@ -15,7 +15,8 @@ CFLAGS = -Wall -Wextra \
           -Idrivers \
           -Itasks \
           -Icore \
-          -Imodels
+          -Imodels \
+          -Iexternal
 
 LDFLAGS = -pthread -lm -lgpiod
 
@@ -32,7 +33,10 @@ SRC = \
     models/network.c \
     models/weights.c \
     models/input_loader.c\
-    drivers/gpio.c
+    drivers/gpio.c\
+    tasks/task_network.c\
+    drivers/network_info.c\
+    drivers/image_proc.c 
 
 OBJ = $(SRC:.c=.o)
 
@@ -54,6 +58,20 @@ TEST_GPIO_SRC = \
     tests/test_gpio.c \
     drivers/gpio.c
 
+TEST_IMAGE_PROC_TARGET = tests/test_image_proc
+
+TEST_IMAGE_PROC_SRC = \
+    tests/test_image_proc.c \
+    drivers/image_proc.c
+
+TEST_PIPELINE_TARGET = tests/test_pipeline
+
+TEST_PIPELINE_SRC = \
+    tests/test_pipeline.c \
+    drivers/image_proc.c \
+    models/network.c \
+    models/weights.c
+
 ###############################################################################
 # Build Application
 ###############################################################################
@@ -73,6 +91,12 @@ test_network:
 test_gpio:
 	$(CC) $(TEST_GPIO_SRC) $(CFLAGS) -o $(TEST_GPIO_TARGET) $(LDFLAGS)
 
+test_image_proc:
+	$(CC) $(TEST_IMAGE_PROC_SRC) $(CFLAGS) -o $(TEST_IMAGE_PROC_TARGET) $(LDFLAGS)
+
+test_pipeline:
+	$(CC) $(TEST_PIPELINE_SRC) $(CFLAGS) -o $(TEST_PIPELINE_TARGET) $(LDFLAGS)
+
 ###############################################################################
 # Generic Rule
 ###############################################################################
@@ -89,9 +113,11 @@ clean:
 	rm -f $(TARGET)
 	rm -f $(TEST_TARGET)
 	rm -f $(TEST_GPIO_TARGET)
+	rm -f $(TEST_IMAGE_PROC_TARGET)
+	rm -f $(TEST_PIPELINE_TARGET)
 
 ###############################################################################
 # Phony Targets
 ###############################################################################
 
-.PHONY: all clean test_network test_gpio
+.PHONY: all clean test_network test_gpio test_image_proc test_pipeline

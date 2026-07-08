@@ -22,6 +22,7 @@
 #include "camera.h"
 #include "task_capture.h"
 #include "task_inference.h"
+#include "task_network.h"
 
 /******************************************************************************
  * Main
@@ -34,6 +35,8 @@ int main(void)
      **************************************************************************/
     pthread_t capture_thread;
     pthread_t inference_thread;
+    pthread_t network_thread;
+
     int ret=0;
     /**************************************************************************
      * Inicializacion
@@ -80,12 +83,27 @@ int main(void)
         return -1;
     }
 
+    printf("[MAIN] Creating network identification task...\n");
+    
+    ret = pthread_create(&network_thread,
+                                NULL,
+                                task_network,
+                                NULL);
+
+    if(ret != 0)
+    {
+        printf("[MAIN] Failed to create capture task.\n");
+        return -1;
+    }
+
+
     /**************************************************************************
      * Wait for tasks
      **************************************************************************/
 
     pthread_join(capture_thread, NULL);
     pthread_join(inference_thread, NULL);
+    pthread_join(network_thread, NULL);
 
     printf("[MAIN] Capture task finished.\n");
     
