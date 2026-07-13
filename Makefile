@@ -27,16 +27,20 @@ LDFLAGS = -pthread -lm -lgpiod
 SRC = \
     app/main.c \
     drivers/camera.c \
+    drivers/gpio.c \
+    drivers/image_proc.c \
+    drivers/network_info.c \
     tasks/task_capture.c \
+    tasks/task_process.c \
     tasks/task_inference.c \
+    tasks/task_network.c \
     core/time_utils.c \
+    core/capture_mailbox.c \
+    core/inference_mailbox.c \
+    core/inference_log.c \
     models/network.c \
     models/weights.c \
-    models/input_loader.c\
-    drivers/gpio.c\
-    tasks/task_network.c\
-    drivers/network_info.c\
-    drivers/image_proc.c 
+    models/input_loader.c
 
 OBJ = $(SRC:.c=.o)
 

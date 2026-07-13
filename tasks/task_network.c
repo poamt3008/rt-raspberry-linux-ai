@@ -91,20 +91,20 @@ void *task_network(void *arg)
         case NETWORK_STATUS_HOME:
             gpio_set(led_green, blink_phase);
             gpio_set(led_red, 0);
-            printf("[NETWORK]  Home-Green \n");
+            //printf("[NETWORK]  Home-Green \n");
             break;
 
         case NETWORK_STATUS_PHONE:
             gpio_set(led_green, 0);
             gpio_set(led_green, blink_phase);
-            printf("[NETWORK]  Phone-Red \n");
+            //printf("[NETWORK]  Phone-Red \n");
             break;
 
         case NETWORK_STATUS_OTHER:
         default:
             gpio_set(led_green, blink_phase);
             gpio_set(led_red, blink_phase);
-            printf("[NETWORK]  No conection_blink \n");
+            //printf("[NETWORK]  No conection_blink \n");
             break;
         }
     }
