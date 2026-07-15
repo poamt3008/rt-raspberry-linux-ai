@@ -40,7 +40,8 @@ SRC = \
     core/inference_log.c \
     models/network.c \
     models/weights.c \
-    models/input_loader.c
+    models/input_loader.c\
+    core/shared_result_client.c 
 
 OBJ = $(SRC:.c=.o)
 

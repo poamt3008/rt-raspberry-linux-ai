@@ -38,7 +38,9 @@ void *task_network(void *arg)
     gpio_handle_t *led_green;
     gpio_handle_t *led_red;
     int blink_phase = 0;   /* 0 = off, 1 = on -- software-driven, not read from hardware */
+    struct timespec t_start, t_end; /*to measure the time period*/
     (void)arg;
+    
 
     /**************************************************************************
      * Initialization
@@ -82,6 +84,9 @@ void *task_network(void *arg)
             printf("[NETWORK] clock_nanosleep() failed.\n");
         }
 
+        /******* Start Measuring Computation Time **********/
+        clock_gettime(CLOCK_MONOTONIC, &t_start);
+
         /*Tarea periodica*/
         network_status_t status = network_info_get_status();
         blink_phase = !blink_phase;
@@ -107,6 +112,11 @@ void *task_network(void *arg)
             //printf("[NETWORK]  No conection_blink \n");
             break;
         }
+
+        /******* End Measuring Computation Time **********/
+        clock_gettime(CLOCK_MONOTONIC, &t_end);
+        printf("[NETWORK] Task execution time: %.2f ms\n",
+           timespec_diff_ms(t_start, t_end));
     }
 
     /* Unreachable in current design (infinite loop) -- kept here as

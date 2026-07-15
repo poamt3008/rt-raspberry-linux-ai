@@ -18,7 +18,7 @@
 /******************************************************************************
  * Capture Task
  ******************************************************************************/
-#define CAPTURE_PERIOD_MS 5000
+#define CAPTURE_PERIOD_MS 3000
 /* Number of images for generation*/
 #define NUMBER_IMAGES 1
 

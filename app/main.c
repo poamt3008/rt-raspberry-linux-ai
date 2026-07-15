@@ -26,6 +26,7 @@
 #include "task_network.h"
 #include "capture_mailbox.h"
 #include "inference_mailbox.h"
+#include "shared_result_client.h"
 
 /******************************************************************************
  * Main
@@ -57,6 +58,12 @@ int main(void)
         printf("[MAIN] Camera initialization failed.\n");
         return -1;
     }
+
+    if (shared_result_client_init() != 0)
+{
+    printf("[MAIN] Shared result client not connected (Process 1 not running?). "
+           "Continuing without it.\n");
+}
 
     capture_mailbox_init(&capture_mb);
     inference_mailbox_init(&inference_mb);
@@ -137,7 +144,7 @@ int main(void)
     /**************************************************************************
      * Release resources
      **************************************************************************/
-
+    shared_result_client_close();
     camera_close();
 
     printf("[MAIN] Application finished.\n");
